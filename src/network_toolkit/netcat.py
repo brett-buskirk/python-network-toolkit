@@ -98,7 +98,7 @@ class NetCat:
                     sys.exit()
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(
         description='BHP Net Tool',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -123,3 +123,7 @@ if __name__ == '__main__':
 
     nc = NetCat(args, buffer.encode())
     nc.run()
+
+
+if __name__ == '__main__':
+    main()

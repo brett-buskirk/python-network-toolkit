@@ -12,7 +12,7 @@ def ssh_command(ip, port, user, passwd, cmd):
         for line in output:
             print(line.strip())
 
-if __name__ == '__main__':
+def main():
     import getpass
     # user = getpass.getuser()
     user = input('Username: ')
@@ -22,3 +22,7 @@ if __name__ == '__main__':
     port = int(input('Enter port or <CR>: ') or 2222)
     cmd = input('Enter command or <CR>: ') or 'id'
     ssh_command(ip, port, user, password, cmd)
+
+
+if __name__ == '__main__':
+    main()
