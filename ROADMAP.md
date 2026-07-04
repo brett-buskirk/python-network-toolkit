@@ -29,7 +29,7 @@ independently-useful slices (one or more PRs per phase). Full context in [`CLAUD
 - [x] `ruff` + `mypy` clean
 - [x] `pytest` coverage for `network_toolkit`'s socket-based tools (`common`, `netcat`, `tcp/*`,
       `udp/client`, the `netk` dispatcher)
-- [ ] `pytest` coverage for the SSH tools (`ssh/client`, `ssh/server`, `ssh/reverse_shell`)
+- [x] `pytest` coverage for the SSH tools (`ssh/client`, `ssh/server`, `ssh/reverse_shell`)
 
 ## v0.5.0 — CI & docs
 - [ ] CI gate: lint → typecheck → test, alongside the existing AgentGate workflow

@@ -16,7 +16,13 @@ All notable changes to the Python Network Toolkit are documented here. The forma
   helpers), `netcat.py` (listen/send, `-c`/`-e`/`-u` modes), `tcp/{server,client,proxy}.py`,
   `udp/client.py`, and the `netk` CLI dispatcher (help/error paths and correct argv forwarding per
   subcommand). All loopback-only, no root privileges or live network required, matching
-  `network_packet_sniffer`'s existing suite. SSH tool coverage lands in a follow-up PR.
+  `network_packet_sniffer`'s existing suite.
+- `pytest` coverage for the SSH tools: `ssh/client.py` (a real connect + `exec_command` round trip
+  against a dedicated exec-capable test server, plus `main()`'s prompt-wiring), `ssh/server.py`
+  (`Server`'s auth/channel-request logic directly, plus a real paramiko client authenticating through
+  it), and `ssh/reverse_shell.py` (a full controller/agent round trip against the real
+  `ssh/server.py` `Server`, plus `main()`'s prompt-wiring). Uses a throwaway generated RSA host key
+  per test, matching the manual verification approach used earlier in this project's history.
 - Unified `netk` CLI (`network_toolkit/cli.py`) exposing every tool as a subcommand — `netk sniff`,
   `netk nc`, `netk tcp-server`, `netk tcp-client`, `netk tcp-proxy`, `netk udp-client`,
   `netk ssh-server`, `netk ssh-client`, `netk ssh-revshell` — with `network_packet_sniffer` wired in
