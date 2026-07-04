@@ -17,7 +17,9 @@ SUBCOMMANDS = {
 }
 
 
-def _print_usage(file=sys.stdout):
+def _print_usage(file=None):
+    if file is None:
+        file = sys.stdout
     print("usage: netk <subcommand> [args...]", file=file)
     print(file=file)
     print("subcommands:", file=file)

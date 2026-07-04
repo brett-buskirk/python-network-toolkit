@@ -26,8 +26,10 @@ independently-useful slices (one or more PRs per phase). Full context in [`CLAUD
       tools real flags.
 
 ## v0.4.0 — Tests & quality
-- [ ] `pytest` coverage for every tool (extend packet-sniffer's suite)
-- [ ] `ruff` + `mypy` clean
+- [x] `ruff` + `mypy` clean
+- [x] `pytest` coverage for `network_toolkit`'s socket-based tools (`common`, `netcat`, `tcp/*`,
+      `udp/client`, the `netk` dispatcher)
+- [ ] `pytest` coverage for the SSH tools (`ssh/client`, `ssh/server`, `ssh/reverse_shell`)
 
 ## v0.5.0 — CI & docs
 - [ ] CI gate: lint → typecheck → test, alongside the existing AgentGate workflow

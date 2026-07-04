@@ -12,6 +12,11 @@ All notable changes to the Python Network Toolkit are documented here. The forma
 - Estate conventions: AgentGate PR guardrails, branch-protection ruleset, label taxonomy, version
   milestones (`v0.1.0`–`v1.0.0`), and a build handoff ([`CLAUDE.md`](CLAUDE.md)).
 - One root `pyproject.toml` covering the whole toolkit (build + `ruff` + `pytest`).
+- `pytest` coverage for `network_toolkit`'s socket-based tools: `common.py` (the shared socket/hexdump
+  helpers), `netcat.py` (listen/send, `-c`/`-e`/`-u` modes), `tcp/{server,client,proxy}.py`,
+  `udp/client.py`, and the `netk` CLI dispatcher (help/error paths and correct argv forwarding per
+  subcommand). All loopback-only, no root privileges or live network required, matching
+  `network_packet_sniffer`'s existing suite. SSH tool coverage lands in a follow-up PR.
 - Unified `netk` CLI (`network_toolkit/cli.py`) exposing every tool as a subcommand — `netk sniff`,
   `netk nc`, `netk tcp-server`, `netk tcp-client`, `netk tcp-proxy`, `netk udp-client`,
   `netk ssh-server`, `netk ssh-client`, `netk ssh-revshell` — with `network_packet_sniffer` wired in
@@ -40,6 +45,11 @@ All notable changes to the Python Network Toolkit are documented here. The forma
 - `tcp-server.py` and `tcp-proxy.py` now set `SO_REUSEADDR` on their listening sockets (via the shared
   `create_tcp_listener`), fixing "Address already in use" on a quick restart -- they were the only two
   listener tools that lacked it.
+- `netk`'s `_print_usage()` captured `sys.stdout` in a default argument at import time instead of
+  looking it up per call, so it silently bypassed any stdout redirection (found while adding tests for
+  it).
+- Fixed several pre-existing `mypy` errors in `network_packet_sniffer`: implicit-`Optional` parameters,
+  and four `os.name == "nt"` checks that mypy couldn't platform-narrow (now `sys.platform == "win32"`).
 
 ### Removed
 - Cruft: a stray `tcp/client/.gitattributes`, scattered per-tool `requirements.txt` files, and
