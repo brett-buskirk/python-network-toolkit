@@ -2,6 +2,7 @@
 
 import struct
 import time
+from typing import BinaryIO
 
 
 class PcapWriter:
@@ -17,7 +18,7 @@ class PcapWriter:
 
     def __init__(self, filename: str):
         self.filename = filename
-        self.file = None
+        self.file: BinaryIO | None = None
 
     def open(self) -> None:
         """Open the pcap file and write the global header."""
@@ -34,7 +35,7 @@ class PcapWriter:
         )
         self.file.write(header)
 
-    def write_packet(self, data: bytes, timestamp: float = None) -> None:
+    def write_packet(self, data: bytes, timestamp: float | None = None) -> None:
         """Write a single packet record to the pcap file."""
         if self.file is None:
             return
