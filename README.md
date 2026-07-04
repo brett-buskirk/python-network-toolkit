@@ -4,6 +4,17 @@ A hands-on collection of small, dependency-light networking tools written in Pyt
 understand the wire up close: packet capture, raw TCP/UDP clients and servers, a TCP proxy, and
 SSH client / server / reverse-shell implementations.
 
+## Installation
+
+Not published to PyPI — install directly from GitHub with [pipx](https://pipx.pypa.io/):
+
+```bash
+pipx install "git+https://github.com/brett-buskirk/python-network-toolkit.git"
+```
+
+Pin to a specific release by appending `@vX.Y.Z` (e.g. `...git.git@v1.0.0`). This installs both the
+`netk` and `netsniff` console scripts.
+
 ## Usage
 
 Every tool is exposed as a subcommand of the unified `netk` CLI:

@@ -6,6 +6,12 @@ All notable changes to the Python Network Toolkit are documented here. The forma
 
 ## [Unreleased]
 
+### Fixed
+- README lacked any end-user install instructions, and the published `v1.0.0` GitHub Release notes
+  incorrectly claimed `pipx install python-network-toolkit` (implying PyPI availability that doesn't
+  exist). Added a proper Installation section documenting the working path — `pipx install` directly
+  from this git repo — and corrected the release notes to match.
+
 ## [1.0.0] - 2026-07-04
 
 ### Added
