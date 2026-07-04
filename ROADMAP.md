@@ -36,7 +36,7 @@ independently-useful slices (one or more PRs per phase). Full context in [`CLAUD
 - [x] One consolidated README with per-tool usage (per-tool docs folded into a section each)
 
 ## v1.0.0 — Release
-- [ ] `pipx`-installable, tagged `v1.0.0`, Definition of Done met — every tool verified working
+- [x] `pipx`-installable, tagged `v1.0.0`, Definition of Done met — every tool verified working
 
 ## v1.1.0 — Expand the suite
 Deepen the existing tools, then grow the collection. Candidates (pick what fits; quality over count):

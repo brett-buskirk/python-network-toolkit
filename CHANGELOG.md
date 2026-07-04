@@ -6,6 +6,8 @@ All notable changes to the Python Network Toolkit are documented here. The forma
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-07-04
+
 ### Added
 - Consolidated nine standalone Python networking repos into one toolkit — packet sniffer, netcat,
   TCP server/client/proxy, UDP client, and SSH server/client/reverse-shell.
@@ -63,11 +65,15 @@ All notable changes to the Python Network Toolkit are documented here. The forma
   it).
 - Fixed several pre-existing `mypy` errors in `network_packet_sniffer`: implicit-`Optional` parameters,
   and four `os.name == "nt"` checks that mypy couldn't platform-narrow (now `sys.platform == "win32"`).
+- `netcat.py`'s command-shell mode (`-c`): a client that disconnected abruptly (e.g. a connection reset)
+  crashed the shared listening socket for every other client, since the error handler closed
+  `self.socket` instead of just that client's `client_socket`. Found while re-verifying `pipx install .`
+  for the `v1.0.0` release — an automated readiness probe connecting-then-disconnecting reliably
+  triggered it.
 
 ### Removed
 - Cruft: a stray `tcp/client/.gitattributes`, scattered per-tool `requirements.txt` files, and
   `packet-sniffer`'s own `pyproject.toml`/`setup.py`/`LICENSE`/pre-refactor `sniffer.py` (fully
   superseded by its `src/` package).
 
-_Nothing released yet — this is a raw consolidation being brought up to `v1.0.0` release quality.
-See the [Roadmap](ROADMAP.md) for the phased plan._
+See the [Roadmap](ROADMAP.md) for what's next past `v1.0.0`.
