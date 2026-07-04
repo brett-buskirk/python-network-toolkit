@@ -25,5 +25,9 @@ SSH client / server / reverse-shell implementations.
 These began as focused exercises in the networking and SSH layers — sockets, protocols, framing —
 and are collected here as one readable reference toolkit rather than scattered one-off repos.
 
+## Security & responsible use
+These are educational, **authorized-use** tools — use them only on systems and networks you own or
+have explicit permission to test. See [SECURITY.md](SECURITY.md).
+
 ## License
 MIT © 2026 Brett Buskirk
