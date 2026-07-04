@@ -23,6 +23,13 @@ All notable changes to the Python Network Toolkit are documented here. The forma
   `network_toolkit/ssh/client.py`, etc.); `network_packet_sniffer` folded in alongside the new
   `network_toolkit` package instead of living in its own repo-within-a-repo.
 - Per-tool READMEs moved to `docs/`; root `LICENSE` deduplicated (dropped the `packet-sniffer/` copy).
+- Extracted a shared `network_toolkit.common` module (`create_tcp_listener`, `create_tcp_client`,
+  `format_hex_dump`) and adopted it in `netcat.py`, `tcp/{server,client,proxy}.py`, and `ssh/server.py`,
+  removing duplicated socket setup/teardown code from each. `network_packet_sniffer/output.py`'s
+  `format_hex_dump` now delegates to the same shared function (its own tests are unaffected — same
+  name, same module, same behavior). `tcp-proxy.py`'s own hand-rolled hex dump is retired in favor of
+  the shared, already-tested formatter (a minor, harmless output-formatting change: lowercase hex
+  offsets instead of uppercase).
 
 ### Fixed
 - Repaired real bugs found while verifying each tool actually runs: two scripts
@@ -30,6 +37,9 @@ All notable changes to the Python Network Toolkit are documented here. The forma
   parsed; `ssh/server/ssh-server.py` had a typo'd `__init__`, a nonexistent `socket.SQL_SOCKET`
   attribute, and instantiated the wrong object; `tcp/proxy/tcp-proxy.py` had a misspelled function
   definition and an unbound-variable bug on one code path.
+- `tcp-server.py` and `tcp-proxy.py` now set `SO_REUSEADDR` on their listening sockets (via the shared
+  `create_tcp_listener`), fixing "Address already in use" on a quick restart -- they were the only two
+  listener tools that lacked it.
 
 ### Removed
 - Cruft: a stray `tcp/client/.gitattributes`, scattered per-tool `requirements.txt` files, and

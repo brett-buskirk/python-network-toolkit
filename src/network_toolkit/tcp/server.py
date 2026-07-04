@@ -1,13 +1,12 @@
-import socket
 import threading
+
+from network_toolkit.common import create_tcp_listener
 
 IP = "0.0.0.0"
 PORT = 9998
 
 def main():
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((IP, PORT))
-    server.listen(5)
+    server = create_tcp_listener(IP, PORT)
     print(f'[*] Listening on {IP}:{PORT}')
 
     while True:

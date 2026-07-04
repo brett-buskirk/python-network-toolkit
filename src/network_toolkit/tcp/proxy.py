@@ -1,26 +1,8 @@
 import sys
-import socket
 import threading
 
-HEX_FILTER = ''.join([(len(repr(chr(i))) == 3) and chr(i) or '.' for i in range(256)])
+from network_toolkit.common import create_tcp_client, create_tcp_listener, format_hex_dump
 
-def hexdump(src, length=16, show=True):
-    if isinstance(src, bytes):
-        src = src.decode()
-
-    results = list()
-    for i in range(0, len(src), length):
-        word = str(src[i:i+length])
-
-        printable = word.translate(HEX_FILTER)
-        hexa = ' '.join([f'{ord(c):02X}' for c in word])
-        hexwidth = length*3
-        results.append(f'{i:04X} {hexa:<{hexwidth}} {printable}')
-    if show:
-        for line in results:
-            print(line)
-    else:
-        return results
 
 def receive_from(connection):
     buffer = b''
@@ -44,12 +26,11 @@ def response_handler(buffer):
     return buffer
 
 def proxy_handler(client_socket, remote_host, remote_port, receive_first):
-    remote_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    remote_socket.connect((remote_host, remote_port))
+    remote_socket = create_tcp_client(remote_host, remote_port)
 
     if receive_first:
         remote_buffer = receive_from(remote_socket)
-        hexdump(remote_buffer)
+        print(format_hex_dump(remote_buffer))
 
         remote_buffer = response_handler(remote_buffer)
         if len(remote_buffer):
@@ -62,7 +43,7 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
         if len(local_buffer):
             line = "[==>] Received %d bytes from localhost." % len(local_buffer)
             print(line)
-            hexdump(local_buffer)
+            print(format_hex_dump(local_buffer))
 
             local_buffer = request_handler(local_buffer)
             remote_socket.send(local_buffer)
@@ -72,7 +53,7 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
         remote_buffer = receive_from(remote_socket)
         if len(remote_buffer):
             print("[<==] Received %d bytes from remote." % len(remote_buffer))
-            hexdump(remote_buffer)
+            print(format_hex_dump(remote_buffer))
 
             remote_buffer = response_handler(remote_buffer)
             client_socket.send(remote_buffer)
@@ -85,9 +66,8 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
             break
 
 def server_loop(local_host, local_port, remote_host, remote_port, receive_first):
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        server.bind((local_host, local_port))
+        server = create_tcp_listener(local_host, local_port)
     except Exception as e:
         print('problem on bind: %r' % e)
 
@@ -96,7 +76,6 @@ def server_loop(local_host, local_port, remote_host, remote_port, receive_first)
         sys.exit(0)
 
     print("[*] Listening on %s:%d" % (local_host, local_port))
-    server.listen(5)
     while True:
         client_socket, addr = server.accept()
         # print out the local connection information

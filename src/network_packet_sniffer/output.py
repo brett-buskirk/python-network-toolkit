@@ -2,16 +2,9 @@
 
 import json
 
+from network_toolkit.common import format_hex_dump
 
-def format_hex_dump(data: bytes, bytes_per_line: int = 16) -> str:
-    """Return a hex dump of *data* with ASCII representation."""
-    lines = []
-    for i in range(0, len(data), bytes_per_line):
-        chunk = data[i : i + bytes_per_line]
-        hex_part = " ".join(f"{b:02x}" for b in chunk)
-        ascii_part = "".join(chr(b) if 32 <= b < 127 else "." for b in chunk)
-        lines.append(f"{i:04x}  {hex_part:<{bytes_per_line * 3}} {ascii_part}")
-    return "\n".join(lines)
+__all__ = ["format_hex_dump", "format_packet_human", "format_packet_json"]
 
 
 def format_packet_human(
