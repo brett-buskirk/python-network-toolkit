@@ -7,8 +7,6 @@ without requiring root privileges or a live network.
 import socket
 import struct
 
-import pytest
-
 from network_packet_sniffer.decode import (
     decode_icmp_header,
     decode_ip_header,

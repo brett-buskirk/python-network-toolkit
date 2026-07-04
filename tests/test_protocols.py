@@ -1,7 +1,5 @@
 """Tests for protocol constant definitions."""
 
-import pytest
-
 from network_packet_sniffer.protocols import ICMP_TYPES, PROTOCOLS, TCP_FLAGS
 
 

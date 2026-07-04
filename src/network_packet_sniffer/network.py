@@ -1,7 +1,7 @@
 """Raw socket creation and network interface utilities."""
 
-import os
 import socket
+import sys
 
 
 def get_local_ip() -> str:
@@ -45,7 +45,7 @@ def get_default_interface() -> str:
     return "eth0"
 
 
-def create_sniffer_socket(host: str, interface: str = None) -> tuple:
+def create_sniffer_socket(host: str, interface: str | None = None) -> tuple:
     """Create a raw socket suitable for packet sniffing.
 
     Returns:
@@ -57,7 +57,7 @@ def create_sniffer_socket(host: str, interface: str = None) -> tuple:
         OSError: If the socket cannot be created or bound.
         PermissionError: If the process lacks the necessary privileges.
     """
-    if os.name == "nt":
+    if sys.platform == "win32":
         sniffer = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_IP)
         try:
             sniffer.bind((host, 0))
@@ -88,7 +88,7 @@ def create_sniffer_socket(host: str, interface: str = None) -> tuple:
 
 def cleanup_socket(sniffer: socket.socket) -> None:
     """Disable promiscuous mode (Windows) and close the socket."""
-    if os.name == "nt":
+    if sys.platform == "win32":
         try:
             sniffer.ioctl(socket.SIO_RCVALL, socket.RCVALL_OFF)
         except Exception:
