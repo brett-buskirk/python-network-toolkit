@@ -22,7 +22,7 @@ def hexdump(src, length=16, show=True):
     else:
         return results
 
-def receieve_from(connection):
+def receive_from(connection):
     buffer = b''
     connection.settimeout(5)
     try:
@@ -51,10 +51,10 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
         remote_buffer = receive_from(remote_socket)
         hexdump(remote_buffer)
 
-    remote_buffer = response_handler(remote_buffer)
-    if len(remote_buffer):
-        print("[<==] Sending %d bytes to localhost." % len(remote_buffer))
-        client_socket.send(remote_buffer)
+        remote_buffer = response_handler(remote_buffer)
+        if len(remote_buffer):
+            print("[<==] Sending %d bytes to localhost." % len(remote_buffer))
+            client_socket.send(remote_buffer)
 
 
     while True:
