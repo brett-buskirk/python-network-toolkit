@@ -21,12 +21,11 @@ Config in `.agentgate.yml`: `secrets` and `dangerous_patterns` are hard **errors
 merge. Restructuring PRs (renames, moves) will trip non-blocking `scope`/`diff_size` warnings —
 that's expected.
 
-## Python conventions (target)
+## Python conventions
 
-Once the toolkit is restructured (see CLAUDE.md), the intended standard is:
-- One root `pyproject.toml`; a `src/` package layout; valid module names (`ssh_cmd.py`, not `ssh-cmd.py`).
+One root `pyproject.toml`; a `src/` package layout; valid module names (`ssh_cmd.py`, not `ssh-cmd.py`).
 - `ruff` for lint + format, `mypy` for types, `pytest` for tests — run all three locally before pushing.
-- A CI gate (lint → typecheck → test) will enforce this once added.
+- A CI gate (lint → typecheck → test) will enforce this once added (see CLAUDE.md, v0.5.0).
 
 ## Secrets — hard rules
 

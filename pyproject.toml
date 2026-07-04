@@ -3,14 +3,14 @@ requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "network-packet-sniffer"
+name = "python-network-toolkit"
 version = "0.1.0"
-description = "A cross-platform packet capture utility that decodes and displays network traffic"
+description = "A collection of Python networking tools — packet sniffer, netcat, TCP/UDP, SSH client/server/reverse-shell"
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
-keywords = ["network", "packet", "sniffer", "pcap", "cli", "security", "diagnostics"]
+keywords = ["network", "networking", "sockets", "tcp", "udp", "ssh", "packet-sniffer", "security", "cli"]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Environment :: Console",
@@ -27,18 +27,21 @@ classifiers = [
     "Topic :: Utilities",
 ]
 
-# No third-party runtime dependencies — pure stdlib.
-dependencies = []
+dependencies = [
+    "paramiko>=2.11.0",
+]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
+    "ruff>=0.4",
+    "mypy>=1.8",
 ]
 
 [project.urls]
-Homepage = "https://github.com/brett-buskirk/network-packet-sniffer"
-Repository = "https://github.com/brett-buskirk/network-packet-sniffer"
-Issues = "https://github.com/brett-buskirk/network-packet-sniffer/issues"
+Homepage = "https://github.com/brett-buskirk/python-network-toolkit"
+Repository = "https://github.com/brett-buskirk/python-network-toolkit"
+Issues = "https://github.com/brett-buskirk/python-network-toolkit/issues"
 
 [project.scripts]
 netsniff = "network_packet_sniffer.cli:main"

@@ -5,13 +5,13 @@ version [milestone](https://github.com/brett-buskirk/python-network-toolkit/mile
 independently-useful slices (one or more PRs per phase). Full context in [`CLAUDE.md`](CLAUDE.md).
 
 ## v0.1.0 — Structure & naming
-- [ ] **Verify each tool runs** and does what its README claims; **fix what's broken** (dead imports,
+- [x] **Verify each tool runs** and does what its README claims; **fix what's broken** (dead imports,
       Python 2-isms, deprecated APIs, wrong defaults)
-- [ ] Fix import-invalid module names (`ssh-cmd.py` → `ssh_cmd.py`, `tcp-client.py` → `tcp_client.py`, …)
-- [ ] Unify a single `src/` layout across all tools (packet-sniffer is the model)
-- [ ] One root `pyproject.toml` (build + `ruff` + `pytest`)
-- [ ] Dedupe the LICENSE (root + `packet-sniffer/`)
-- [ ] Drop cruft — stray `.gitattributes`, scattered `requirements.txt`
+- [x] Fix import-invalid module names (`ssh-cmd.py` → `ssh_cmd.py`, `tcp-client.py` → `tcp_client.py`, …)
+- [x] Unify a single `src/` layout across all tools (packet-sniffer is the model)
+- [x] One root `pyproject.toml` (build + `ruff` + `pytest`)
+- [x] Dedupe the LICENSE (root + `packet-sniffer/`)
+- [x] Drop cruft — stray `.gitattributes`, scattered `requirements.txt`
 
 ## v0.2.0 — Unified CLI
 - [ ] A `netk` entry point with a subcommand per tool (`netk sniff`, `netk nc`, `netk tcp-server`, …)
