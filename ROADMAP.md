@@ -18,8 +18,12 @@ independently-useful slices (one or more PRs per phase). Full context in [`CLAUD
 - [x] Fold the packet-sniffer package in as a module/subcommand, not a repo-within-a-repo
 
 ## v0.3.0 — Shared library
-- [ ] Extract the real overlap — socket setup/teardown, argument parsing, hexdump/output formatting,
-      framing — into a shared library so each tool is thin
+- [x] Extract the real overlap — socket setup/teardown (`network_toolkit.common`) and hexdump/output
+      formatting (also fixed a latent `SO_REUSEADDR` inconsistency along the way) — into a shared
+      library so each tool is thin
+- [ ] Argument parsing / framing helpers — deferred: only one or two tools have real CLI flags today,
+      so there isn't yet enough duplication to justify a shared layer. Revisit once v1.1.0 gives more
+      tools real flags.
 
 ## v0.4.0 — Tests & quality
 - [ ] `pytest` coverage for every tool (extend packet-sniffer's suite)

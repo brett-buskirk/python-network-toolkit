@@ -1,8 +1,9 @@
 import os
 import paramiko
-import socket
 import sys
 import threading
+
+from network_toolkit.common import create_tcp_listener
 
 
 class Server (paramiko.ServerInterface):
@@ -26,10 +27,7 @@ def main():
     server = '192.168.1.207'
     ssh_port = 2222
     try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        sock.bind((server, ssh_port))
-        sock.listen(100)
+        sock = create_tcp_listener(server, ssh_port, backlog=100)
         print('[*] Listening for connection ...')
         client, addr = sock.accept()
     except Exception as e:

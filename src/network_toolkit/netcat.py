@@ -1,10 +1,12 @@
 import argparse
-import socket
 import shlex
 import subprocess
 import sys
 import textwrap
 import threading
+
+from network_toolkit.common import create_tcp_client, create_tcp_listener
+
 
 def execute(cmd):
     cmd = cmd.strip()
@@ -18,17 +20,16 @@ class NetCat:
     def __init__(self, args, buffer=None):
         self.args = args
         self.buffer = buffer
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self.socket = None
 
     def run(self):
         if self.args.listen:
             self.listen()
         else:
             self.send()
-    
+
     def send(self):
-        self.socket.connect((self.args.target, self.args.port))
+        self.socket = create_tcp_client(self.args.target, self.args.port)
         if self.buffer:
             self.socket.send(self.buffer)
 
@@ -53,8 +54,7 @@ class NetCat:
             sys.exit()
 
     def listen(self):
-        self.socket.bind((self.args.target, self.args.port))
-        self.socket.listen(5)
+        self.socket = create_tcp_listener(self.args.target, self.args.port)
         while True:
             client_socket, _ = self.socket.accept()
             client_thread = threading.Thread(
