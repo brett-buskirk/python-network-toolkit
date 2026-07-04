@@ -4,10 +4,10 @@
 def matches_filter(
     packet_info: dict,
     *,
-    protocol: str = None,
-    port: int = None,
-    src_ip: str = None,
-    dst_ip: str = None,
+    protocol: str | None = None,
+    port: int | None = None,
+    src_ip: str | None = None,
+    dst_ip: str | None = None,
 ) -> bool:
     """Return True if *packet_info* satisfies all of the supplied filter criteria.
 

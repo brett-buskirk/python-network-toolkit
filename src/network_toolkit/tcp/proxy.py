@@ -13,7 +13,7 @@ def receive_from(connection):
             if not data:
                 break
             buffer += data
-    except Exception as e:
+    except Exception:
         pass
     return buffer
 

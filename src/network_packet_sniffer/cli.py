@@ -23,7 +23,7 @@ def _check_privileges() -> None:
     On Windows: prints an error and exits (automatic elevation requires a GUI
     UAC prompt which is impractical in a terminal tool).
     """
-    if os.name == "nt":
+    if sys.platform == "win32":
         import ctypes
         if not ctypes.windll.shell32.IsUserAnAdmin():
             print("Error: This program requires administrator privileges.", file=sys.stderr)
@@ -133,7 +133,7 @@ def main(argv=None) -> None:
         sniffer, has_eth_header = create_sniffer_socket(host, args.interface)
         eth_header_len = 14 if has_eth_header else 0
 
-        if os.name == "nt":
+        if sys.platform == "win32":
             print(f"Sniffer started on {host}")
         else:
             iface = args.interface or get_default_interface()
