@@ -32,8 +32,8 @@ independently-useful slices (one or more PRs per phase). Full context in [`CLAUD
 - [x] `pytest` coverage for the SSH tools (`ssh/client`, `ssh/server`, `ssh/reverse_shell`)
 
 ## v0.5.0 — CI & docs
-- [ ] CI gate: lint → typecheck → test, alongside the existing AgentGate workflow
-- [ ] One consolidated README with per-tool usage (per-tool docs folded into a section each)
+- [x] CI gate: lint → typecheck → test, alongside the existing AgentGate workflow
+- [x] One consolidated README with per-tool usage (per-tool docs folded into a section each)
 
 ## v1.0.0 — Release
 - [ ] `pipx`-installable, tagged `v1.0.0`, Definition of Done met — every tool verified working

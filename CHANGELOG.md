@@ -12,6 +12,10 @@ All notable changes to the Python Network Toolkit are documented here. The forma
 - Estate conventions: AgentGate PR guardrails, branch-protection ruleset, label taxonomy, version
   milestones (`v0.1.0`–`v1.0.0`), and a build handoff ([`CLAUDE.md`](CLAUDE.md)).
 - One root `pyproject.toml` covering the whole toolkit (build + `ruff` + `pytest`).
+- CI gate (`.github/workflows/ci.yml`) alongside the existing AgentGate workflow: a `lint` job
+  (`ruff check .` + `mypy src/`) gates a `test` job running the full `pytest` suite across a
+  Python 3.10/3.11/3.12 matrix, validating the multi-version support already declared in
+  `pyproject.toml`'s classifiers.
 - `pytest` coverage for `network_toolkit`'s socket-based tools: `common.py` (the shared socket/hexdump
   helpers), `netcat.py` (listen/send, `-c`/`-e`/`-u` modes), `tcp/{server,client,proxy}.py`,
   `udp/client.py`, and the `netk` CLI dispatcher (help/error paths and correct argv forwarding per
@@ -34,6 +38,9 @@ All notable changes to the Python Network Toolkit are documented here. The forma
   `network_toolkit/ssh/client.py`, etc.); `network_packet_sniffer` folded in alongside the new
   `network_toolkit` package instead of living in its own repo-within-a-repo.
 - Per-tool READMEs moved to `docs/`; root `LICENSE` deduplicated (dropped the `packet-sniffer/` copy).
+- Folded the per-tool `docs/*.md` files into one consolidated root `README.md` (a section per tool,
+  with real usage examples/flags reflecting current behavior rather than the original one-line stubs
+  most of them were); `docs/` is removed now that it's the single source of truth.
 - Extracted a shared `network_toolkit.common` module (`create_tcp_listener`, `create_tcp_client`,
   `format_hex_dump`) and adopted it in `netcat.py`, `tcp/{server,client,proxy}.py`, and `ssh/server.py`,
   removing duplicated socket setup/teardown code from each. `network_packet_sniffer/output.py`'s
