@@ -14,8 +14,8 @@ independently-useful slices (one or more PRs per phase). Full context in [`CLAUD
 - [x] Drop cruft — stray `.gitattributes`, scattered `requirements.txt`
 
 ## v0.2.0 — Unified CLI
-- [ ] A `netk` entry point with a subcommand per tool (`netk sniff`, `netk nc`, `netk tcp-server`, …)
-- [ ] Fold the packet-sniffer package in as a module/subcommand, not a repo-within-a-repo
+- [x] A `netk` entry point with a subcommand per tool (`netk sniff`, `netk nc`, `netk tcp-server`, …)
+- [x] Fold the packet-sniffer package in as a module/subcommand, not a repo-within-a-repo
 
 ## v0.3.0 — Shared library
 - [ ] Extract the real overlap — socket setup/teardown, argument parsing, hexdump/output formatting,

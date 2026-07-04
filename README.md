@@ -4,6 +4,20 @@ A hands-on collection of small, dependency-light networking tools written in Pyt
 understand the wire up close: packet capture, raw TCP/UDP clients and servers, a TCP proxy, and
 SSH client / server / reverse-shell implementations.
 
+## Usage
+
+Every tool is exposed as a subcommand of the unified `netk` CLI:
+
+```bash
+netk --help              # list every subcommand
+netk sniff --count 10    # capture 10 packets
+netk nc -l -p 5555       # netcat-style listener
+netk tcp-proxy 127.0.0.1 9000 10.0.0.5 9000 False
+```
+
+`netk <subcommand> --help` forwards to that tool's own help. Tools with no CLI flags yet
+(`tcp-client`, `udp-client`, `ssh-server`, `ssh-client`, `ssh-revshell`) just run with `netk <name>`.
+
 ## Tools
 
 **Packet capture**
@@ -31,9 +45,10 @@ python3 -m venv .venv
 .venv/bin/pytest
 ```
 
-A unified `netk` CLI exposing every tool as a subcommand is planned for v0.2.0 — see
-[ROADMAP.md](ROADMAP.md). For now each tool is run as a module, e.g.
-`python -m network_toolkit.tcp.server`, or via the packet sniffer's own `netsniff` console script.
+This also installs the `netk` and `netsniff` console scripts into `.venv/bin/`. Each tool can also be
+run directly as a module, e.g. `python -m network_toolkit.tcp.server` — useful during development
+without reinstalling. See [ROADMAP.md](ROADMAP.md) for what's next (v0.3.0's shared argument-parsing
+library, which will give every tool the same flag conventions `netk` currently just passes through).
 
 ## Why
 These began as focused exercises in the networking and SSH layers — sockets, protocols, framing —

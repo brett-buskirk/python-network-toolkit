@@ -12,6 +12,11 @@ All notable changes to the Python Network Toolkit are documented here. The forma
 - Estate conventions: AgentGate PR guardrails, branch-protection ruleset, label taxonomy, version
   milestones (`v0.1.0`–`v1.0.0`), and a build handoff ([`CLAUDE.md`](CLAUDE.md)).
 - One root `pyproject.toml` covering the whole toolkit (build + `ruff` + `pytest`).
+- Unified `netk` CLI (`network_toolkit/cli.py`) exposing every tool as a subcommand — `netk sniff`,
+  `netk nc`, `netk tcp-server`, `netk tcp-client`, `netk tcp-proxy`, `netk udp-client`,
+  `netk ssh-server`, `netk ssh-client`, `netk ssh-revshell` — with `network_packet_sniffer` wired in
+  as `netk sniff` instead of only being reachable via its own `netsniff` script (which still works
+  standalone).
 
 ### Changed
 - Unified every tool under a single `src/` layout with valid module names (`ssh-cmd.py` →
@@ -31,5 +36,5 @@ All notable changes to the Python Network Toolkit are documented here. The forma
   `packet-sniffer`'s own `pyproject.toml`/`setup.py`/`LICENSE`/pre-refactor `sniffer.py` (fully
   superseded by its `src/` package).
 
-_Nothing released yet — this is a raw consolidation being restructured into an installable `netk`
-CLI. See the [Roadmap](ROADMAP.md) for the phased plan toward `v1.0.0`._
+_Nothing released yet — this is a raw consolidation being brought up to `v1.0.0` release quality.
+See the [Roadmap](ROADMAP.md) for the phased plan._

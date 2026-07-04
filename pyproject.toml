@@ -45,6 +45,7 @@ Issues = "https://github.com/brett-buskirk/python-network-toolkit/issues"
 
 [project.scripts]
 netsniff = "network_packet_sniffer.cli:main"
+netk = "network_toolkit.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
