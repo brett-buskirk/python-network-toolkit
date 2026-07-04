@@ -2,6 +2,7 @@
 
 import argparse
 import socket
+import struct
 import subprocess
 import threading
 import time
@@ -90,6 +91,34 @@ class TestNetCatCommandShellMode:
                 s.sendall(b"echo cmdshell_ok\n")
                 resp = s.recv(4096)
                 assert b"cmdshell_ok" in resp
+        finally:
+            nc.socket.close()
+
+    def test_a_disconnecting_client_does_not_kill_the_listener(self):
+        # Regression test: a client that connects and immediately resets the
+        # connection (e.g. a readiness probe) used to crash the shared listening
+        # socket -- handle()'s error path closed self.socket instead of
+        # client_socket. Use SO_LINGER(0) to force a hard RST deterministically,
+        # rather than relying on timing to hit the exception path.
+        port = 29558
+        nc = NetCat(_args(port, listen=True, command=True))
+        thread = threading.Thread(target=nc.listen, daemon=True)
+        thread.start()
+        try:
+            assert _wait_for_port("127.0.0.1", port)
+            probe = socket.create_connection(("127.0.0.1", port), timeout=3)
+            probe.setsockopt(socket.SOL_SOCKET, socket.SO_LINGER, struct.pack("ii", 1, 0))
+            probe.close()  # RST, not a graceful FIN
+            time.sleep(0.3)  # let the resulting handler thread hit its error path
+
+            assert nc.socket.fileno() != -1, "the shared listening socket was closed"
+
+            with socket.create_connection(("127.0.0.1", port), timeout=3) as s:
+                prompt = s.recv(64)
+                assert prompt == b"BHP: #> "
+                s.sendall(b"echo still_alive\n")
+                resp = s.recv(4096)
+                assert b"still_alive" in resp
         finally:
             nc.socket.close()
 
