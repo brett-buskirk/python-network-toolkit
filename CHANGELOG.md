@@ -12,6 +12,10 @@ All notable changes to the Python Network Toolkit are documented here. The forma
 - Estate conventions: AgentGate PR guardrails, branch-protection ruleset, label taxonomy, version
   milestones (`v0.1.0`–`v1.0.0`), and a build handoff ([`CLAUDE.md`](CLAUDE.md)).
 - One root `pyproject.toml` covering the whole toolkit (build + `ruff` + `pytest`).
+- CI gate (`.github/workflows/ci.yml`) alongside the existing AgentGate workflow: a `lint` job
+  (`ruff check .` + `mypy src/`) gates a `test` job running the full `pytest` suite across a
+  Python 3.10/3.11/3.12 matrix, validating the multi-version support already declared in
+  `pyproject.toml`'s classifiers.
 - `pytest` coverage for `network_toolkit`'s socket-based tools: `common.py` (the shared socket/hexdump
   helpers), `netcat.py` (listen/send, `-c`/`-e`/`-u` modes), `tcp/{server,client,proxy}.py`,
   `udp/client.py`, and the `netk` CLI dispatcher (help/error paths and correct argv forwarding per
